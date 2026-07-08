@@ -8,11 +8,11 @@ Diseño de sistema de procesamiento de señales acústicas distribuidas en RFSoC
 CPDAS-RFSoC/
 ├── Documentos/          # Documentación y memoria
 ├── Matlab/              # Scripts y análisis en MATLAB
-├── Vivado_chip_design/  # Diseño de la parte de adquisición (ADC/DAC)
+├── Vivado_chip_design/  # Integración en RFSoC (FFT/DMA/DAC-ADC)
 │   ├── create_project.tcl
 │   ├── hw/              # Hardware: TCL, BD, constraints
 │   └── sw/core_app/src/ # Código fuente C para ARM
-├── Vivado_dataproc_design/  # Diseño de procesamiento (FFT/DMA)
+├── Vivado_dataproc_design/  # Diseño de la parte de procesamiento y flujo de datos PS<->PL (FFT/DMA)
 │   ├── create_project.tcl
 │   ├── hw/              # Hardware: TCL, BD, constraints
 │   └── sw/dma_fft/src/  # Código fuente C para ARM
