@@ -1,53 +1,131 @@
 # CPDAS-RFSoC
 
-Repositorio para el Trabajo Fin de Máster (TFM) sobre Custom Processing Data Acquisition System (CPDAS) para RFSoC.
+Diseño de sistema de procesamiento de señales acústicas distribuidas en RFSoC.
 
-## Estructura del Repositorio
+## Estructura del Proyecto
 
 ```
-├── Documentos/              # Memoria LaTeX del TFM y documentación relacionada
-├── Matlab/                  # Scripts y funciones de MATLAB
-├── Vivado_chip_design/      # Proyecto Vivado - Diseño del chip principal
-└── Vivado_dataproc_design/  # Proyecto Vivado - Diseño del procesador de datos
+CPDAS-RFSoC/
+├── Documentos/          # Documentación y memoria
+├── Matlab/              # Scripts y análisis en MATLAB
+├── Vivado_chip_design/  # Diseño de la parte de adquisición (ADC/DAC)
+│   ├── create_project.tcl
+│   ├── hw/              # Hardware: TCL, BD, constraints
+│   └── sw/core_app/src/ # Código fuente C para ARM
+├── Vivado_dataproc_design/  # Diseño de procesamiento (FFT/DMA)
+│   ├── create_project.tcl
+│   ├── hw/              # Hardware: TCL, BD, constraints
+│   └── sw/dma_fft/src/  # Código fuente C para ARM
+└── README.md
 ```
-
-## Contenido
-
-### Documentos/
-Memoria LaTeX del Trabajo Fin de Máster con especificaciones, diagramas y resultados.
-
-### Matlab/
-Scripts de MATLAB para simulación, procesamiento de datos y validación.
-
-### Vivado_chip_design/
-Diseño del chip principal en Vivado, incluyendo:
-- Diseño HDL (VHDL/Verilog)
-- IPs personalizadas
-- Bloques de diseño
-
-### Vivado_dataproc_design/
-Diseño del procesador de datos en Vivado, incluyendo:
-- Lógica de procesamiento
-- IPs personalizadas
-- Interfaz de comunicación
 
 ## Requisitos
 
-- **Vivado** (versión recomendada: 2024.x)
-- **MATLAB** (versión recomendada: R2023b+)
-- **LaTeX** (para compilar la memoria)
+### Software
+- **Vivado Design Suite** 2024.1 o superior
+- **Vitis Unified Software Platform** 2024.1 o superior
+- **MATLAB** R2023b o superior (opcional, para análisis)
 
-## Uso
+### Librerías Externas
 
-1. Clona el repositorio
-2. Abre los proyectos Vivado desde `Vivado_chip_design/` y `Vivado_dataproc_design/`
-3. Ejecuta los scripts de MATLAB desde la carpeta `Matlab/`
-4. Consulta la memoria en `Documentos/`
+#### Ne10 Library (Neon Engine)
+Estas librerías **NO** están incluidas en el repo. Debes descargarlas manualmente:
 
-## Autor
+1. **Para Vivado_chip_design** (ARM64 - aarch64):
+   - Descargar: [Ne10 GitHub](https://github.com/projectNe10/Ne10)
+   - Compilar para aarch64 o descargar precompiladas
+   - Colocar en: `Vivado_chip_design/Ne10-standalone-lib-aarch64/`
 
-Alexis López Duffau
+2. **Para Vivado_dataproc_design** (ARM32):
+   - Descargar: [Ne10 GitHub](https://github.com/projectNe10/Ne10)
+   - Compilar para ARM 32-bit o descargar precompiladas
+   - Colocar en: `Vivado_dataproc_design/Ne10-standalone-lib-arm32/`
 
-## Licencia
+**Estructura esperada después de descargar:**
+```
+Ne10-standalone-lib-aarch64/
+├── include/
+│   ├── NE10.h
+│   └── ...
+└── lib/
+    ├── libNE10.a
+    └── ...
+```
 
-Especificar si es necesario
+## Cómo Usar
+
+### 1. Clonar el Repositorio
+```bash
+git clone https://github.com/AlexLDP01/CPDAS-RFSoC.git
+cd CPDAS-RFSoC
+```
+
+### 2. Generar Proyectos en Vivado
+
+**Chip Design (ADC/DAC):**
+```bash
+cd Vivado_chip_design
+vivado -mode batch -source create_project.tcl
+```
+
+**Dataproc Design (FFT/DMA):**
+```bash
+cd Vivado_dataproc_design
+vivado -mode batch -source create_project.tcl
+```
+
+### 3. Descargar e Instalar Ne10 Libraries
+- Sigue las instrucciones en [Ne10 Repository](https://github.com/projectNe10/Ne10)
+- Coloca las librerías compiladas en las ubicaciones indicadas arriba
+
+### 4. Crear Plataformas en Vitis
+- Genera los `.xsa` desde Vivado (Export Hardware)
+- Crea plataformas en Vitis apuntando a esos `.xsa`
+- Enlaza las librerías Ne10 en las propiedades del proyecto
+
+### 5. Compilar Aplicaciones
+```bash
+# En Vitis o desde terminal:
+vitis -workspace ./ws
+```
+
+## Contenido de Carpetas
+
+### `Documentos/`
+- Contexto del TFM
+- Memoria LaTeX del proyecto
+- Documentación general
+
+### `Matlab/`
+- Scripts de análisis
+- Pruebas de algoritmos FFT
+- Herramientas de verificación
+
+### `Vivado_chip_design/`
+- **hw/ADC_DAC.srcs/**: Proyecto de hardware para interfaz ADC/DAC
+- **sw/core_app/src/**: Aplicación C para configuración y control
+  - Incluye: configuración de RFDC, DMA, Si5381A (PLL)
+
+### `Vivado_dataproc_design/`
+- **hw/TFM_DP_part.srcs/**: Proyecto de hardware para procesamiento
+- **sw/dma_fft/src/**: Aplicación C para DMA y FFT
+  - Utiliza Ne10 para cálculos optimizados
+
+## Archivos Generados (No Versionados)
+
+El repositorio **NO incluye**:
+- Proyectos compilados (`.xpr`, `.cache/`, `.runs/`, etc.)
+- Binarios y artefactos de compilación (`.elf`, `.bit`, `.bin`)
+- Archivos de workspace de Vitis (`.metadata/`, `Debug/`, `Release/`)
+- Librerías externas grandes (Ne10 precompiladas)
+
+Estos se regeneran al ejecutar los scripts TCL y compilar en Vitis.
+
+## Flujo de Desarrollo
+
+1. Modificar diseño → Regenerar en Vivado
+2. Exportar hardware (`.xsa`)
+3. Actualizar plataforma en Vitis
+4. Modificar código fuente C en `sw/*/src/`
+5. Compilar en Vitis
+6. Depurar en hardware RFSoC
