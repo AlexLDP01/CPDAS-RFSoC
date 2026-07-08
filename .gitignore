@@ -1,34 +1,206 @@
-# Vivado
+# =========================
+# Estrategia general
+# =========================
+# Ignorar casi todo Vivado/Vitis por defecto
+Vivado_chip_design/**
+Vivado_dataproc_design/**
+
+# =========================
+# Permitir estructura base
+# =========================
+!Vivado_chip_design/
+!Vivado_chip_design/create_project.tcl
+!Vivado_chip_design/hw/
+!Vivado_chip_design/sw/
+
+!Vivado_dataproc_design/
+!Vivado_dataproc_design/create_project.tcl
+!Vivado_dataproc_design/hw/
+!Vivado_dataproc_design/sw/
+
+# =========================
+# Vivado_chip_design - HW esencial
+# =========================
+!Vivado_chip_design/hw/System.tcl
+
+!Vivado_chip_design/hw/my_ip_repo/
+!Vivado_chip_design/hw/my_ip_repo/**
+
+!Vivado_chip_design/hw/ADC_DAC.srcs/
+!Vivado_chip_design/hw/ADC_DAC.srcs/constrs_1/
+!Vivado_chip_design/hw/ADC_DAC.srcs/constrs_1/new/
+!Vivado_chip_design/hw/ADC_DAC.srcs/constrs_1/new/*.xdc
+
+!Vivado_chip_design/hw/ADC_DAC.srcs/sources_1/
+!Vivado_chip_design/hw/ADC_DAC.srcs/sources_1/bd/
+!Vivado_chip_design/hw/ADC_DAC.srcs/sources_1/bd/System/
+!Vivado_chip_design/hw/ADC_DAC.srcs/sources_1/bd/System/System.bd
+
+# Opcional: permitir .xci del BD si el Tcl los necesita
+!Vivado_chip_design/hw/ADC_DAC.srcs/sources_1/bd/System/ip/
+!Vivado_chip_design/hw/ADC_DAC.srcs/sources_1/bd/System/ip/**/*.xci
+
+# =========================
+# Vivado_dataproc_design - HW esencial
+# =========================
+!Vivado_dataproc_design/hw/System.tcl
+
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/constrs_1/
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/constrs_1/new/
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/constrs_1/new/*.xdc
+
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/sources_1/
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/sources_1/bd/
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/sources_1/bd/system1/
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/sources_1/bd/system1/system1.bd
+
+# Opcional: permitir .xci del BD si el Tcl los necesita
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/sources_1/bd/system1/ip/
+!Vivado_dataproc_design/hw/TFM_DP_part.srcs/sources_1/bd/system1/ip/**/*.xci
+
+# =========================
+# Sources C que quieres conservar
+# =========================
+!Vivado_chip_design/sw/core_app/
+!Vivado_chip_design/sw/core_app/src/
+!Vivado_chip_design/sw/core_app/src/**
+
+!Vivado_dataproc_design/sw/dma_fft/
+!Vivado_dataproc_design/sw/dma_fft/src/
+!Vivado_dataproc_design/sw/dma_fft/src/**
+
+# =========================
+# Vivado / Xilinx generado
+# =========================
 .Xil/
 *.jou
 *.log
+*.str
+*.wdb
 vivado_pid*.str
 vivado_pid*.wdb
+
 *.runs/
-.sim/
-*.xpr
+*.sim/
 *.cache/
 *.hw/
 *.ip_user_files/
+*.gen/
+*.dcp
+*.bit
+*.bin
+*.ltx
+*.xsa
+*.hwh
+*.hwdef
+*.bxml
+*.bda
+*.rpt
+*.rpx
+*.pb
+*.xpr
 
+# =========================
+# Vitis / SDK / Eclipse generado
+# =========================
+.metadata/
+RemoteSystemsTempFiles/
+.analytics
+**/Debug/
+**/Release/
+**/_ide/
+**/.settings/
+**/.project
+**/.cproject
+**/bsp/
+**/libsrc/
+**/include/
+**/platform.spr
+**/*.sprj
+*.elf
+*.o
+*.a
+*.map
+*.su
+*.lst
+
+# =========================
+# CMake generado
+# =========================
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/install_manifest.txt
+**/CTestTestfile.cmake
+
+# =========================
 # MATLAB
+# =========================
 *.asv
 *.m~
+*.mat
+*.bin
+*.mlx.autosave
 
-# OS
-.DS_Store
-Thumbs.db
+# =========================
+# LaTeX generado
+# =========================
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.idx
+*.ilg
+*.ind
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.nav
+*.snm
+*.vrb
 
-# Carpetas a excluir
+# =========================
+# Carpetas personales / no repo
+# =========================
 Specs/
 Downloads/
+ID_anydesk.txt
+CPDAS-RFSoC/
+status.txt
 
+# =========================
+# Librerías externas grandes
+# =========================
+Vivado_chip_design/Ne10-standalone-lib-aarch64/
+Vivado_dataproc_design/Ne10-standalone-lib-arm32/
+**/Packages/
+**/.repos.xml
+
+# =========================
 # Python
+# =========================
 __pycache__/
 *.py[cod]
 *$py.class
 
-# IDE
+# =========================
+# OS / IDE
+# =========================
+.DS_Store
+Thumbs.db
 .vscode/
 .idea/
 *.swp

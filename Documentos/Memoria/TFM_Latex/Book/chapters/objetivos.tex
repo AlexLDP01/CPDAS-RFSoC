@@ -1,0 +1,23 @@
+\chapter{Objetivos}
+
+El objetivo principal de este Trabajo Fin de Máster es desarrollar y validar una arquitectura \textit{System-on-Chip} de adquisición y procesado de trazas CP-DAS basada en una plataforma FPGA con tecnología RFSoC, con el fin de estudiar su viabilidad como alternativa a sistemas de procesado basados únicamente en FPGA o en circuitos integrados de aplicación específica, ASICs.
+
+El trabajo se ha dividido en una serie de hitos técnicos para facilitar la validación unitaria de las distintas partes del sistema y su posterior integración en una única arquitectura:
+
+\begin{enumerate}
+	\item Estudiar el principio de funcionamiento de los sistemas CP-DAS y el procesado necesario para detectar desplazamientos temporales entre trazas, con el objetivo de poder detectar y medir eventos en un sensor distribuido.
+	
+	\item Identificar las plataformas \textit{hardware} disponibles para el desarrollo. Inicialmente se plantea desarrollar toda la arquitectura sobre la tarjeta de evaluación ZCU670 RFSoC. Sin embargo, debido a una avería detectada en los primeros intentos de configuración de la tarjeta, se replantean los objetivos de manera que los primeros hitos se desarrollen sobre la tarjeta UltraZed-3EG IO Carrier Card. Esta plataforma carece de la velocidad y de la capacidad de generación y digitalización de señales analógicas propias de la ZCU670, pero permite desarrollar y probar el algoritmo de procesamiento en una CPU equivalente, con un \textit{core} ARM A53, así como implementar gran parte de la lógica programable en la FPGA.
+	
+	\item Diseñar una primera arquitectura \textit{hardware} de transferencia de datos entre la lógica programable y la memoria DDR mediante acceso directo a memoria, DMA por sus siglas en inglés, utilizando la plataforma preliminar UltraZed-3EG como entorno de desarrollo.
+	
+	\item Desarrollar una aplicación \textit{software} en Vitis para controlar las transferencias DMA mediante \textit{polling}, gestionar los \textit{buffers} de memoria y validar el flujo de datos entre la lógica programable y el sistema de procesamiento.
+	
+	\item Refinar la arquitectura de adquisición mediante el uso de interrupciones y doble \textit{buffer} con semáforo. Esta mejora supone un \textit{pipeline} virtual de dos etapas: una encargada de comandar las transferencias por DMA cuando se libera espacio en memoria y otra encargada de procesar los datos.
+	
+	\item Implementar y validar el algoritmo de procesado de trazas, incluyendo la división en ventanas con \textit{zero-padding}, el cálculo de la FFT, el producto en frecuencia entre las ventanas de la traza adquirida y las de una traza de referencia, y finalmente el cálculo de la IFFT. Las tres operaciones conjuntas permiten obtener la correlación entre la traza adquirida y la traza de referencia.
+	
+	\item Migrar el diseño desarrollado a la plataforma ZCU670 RFSoC, incorporando el RF Data Converter y adaptando la arquitectura \textit{hardware} y \textit{software} para funcionar con un flujo de datos generado por el DAC y adquirido por el ADC a modo de ensayo.
+	
+	\item Validar la arquitectura final y obtener medidas de tiempos de ejecución y precisión de los resultados respecto a la referencia calculada en MATLAB, con el fin de determinar la viabilidad de la propuesta. Además, se plantean posibles mejoras practicables y se identifican los problemas surgidos durante el desarrollo.
+\end{enumerate}
