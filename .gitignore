@@ -1,0 +1,34 @@
+# Vivado
+.Xil/
+*.jou
+*.log
+vivado_pid*.str
+vivado_pid*.wdb
+*.runs/
+.sim/
+*.xpr
+*.cache/
+*.hw/
+*.ip_user_files/
+
+# MATLAB
+*.asv
+*.m~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Carpetas a excluir
+Specs/
+Downloads/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE
+.vscode/
+.idea/
+*.swp
