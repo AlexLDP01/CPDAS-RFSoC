@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic template for TFC/TFM/TFG/Tesis
+%
+% $Id: desarrollo.tex,v 1.4 2015/06/05 00:05:18 macias Exp $
+%
+% By:
+%  + Javier Macías-Guarasa.
+%    Departamento de Electrónica
+%    Universidad de Alcalá
+%  + Roberto Barra-Chicote.
+%    Departamento de Ingeniería Electrónica
+%    Universidad Politécnica de Madrid
+% 
+% Based on original sources by Roberto Barra, Manuel Ocaña, Jesús Nuevo, Pedro Revenga, Fernando Herránz and Noelia Hernández. Thanks a lot to all of them, and to the many anonymous contributors found (thanks to google) that provided help in setting all this up.
+%
+% See also the additionalContributors.txt file to check the name of additional contributors to this work.
+%
+% If you think you can add pieces of relevant/useful examples, improvements, please contact us at (macias@depeca.uah.es)
+%
+% You can freely use this template and please contribute with comments or suggestions!!!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Desarrollo}
+\label{cha:desarrollo}
+
+\section{Introducción}
+
+En este capítulo se describe el desarrollo del la propuesta para la adquisición y procesado de trazas CP-DAS sobre la plataforma RFSoC ZCU670. No obstante, una parte significativa del desarrollo se realizó sobre la tarjeta de evaluación UltraZed-3EG IO Carrier Card con el fin de validar de forma aislada el procesado de señal y la comunicación entre el procesador y la PL antes de abordar la integración completa en la RFSoC.
+
+El desarrollo se divide en dos bloques principales: el diseño digital implementado en Vivado a través de IPs, tanto de xilinx como de elaboración propia, y la aplicación \textit{software} ejecutada en el sistema de procesamiento. En primer lugar, se presenta la plataforma física utilizada en cada etapa, diferenciando entre el entorno preliminar de validación y la plataforma final basada en la ZCU670. Esta distinción permite separar el desarrollo de los bloques de adquisición, transferencia y procesado de la problemática específica asociada a los conversores RF, al sistema de reloj y a la conexión de \textit{loopback} entre DAC y ADC.
+
+A continuación, se describe la arquitectura \textit{hardware} desarrollada en la lógica programable, formada por interfaces AXI-Stream, FIFOs de adaptación, el bloque AXI DMA y la conexión con la memoria DDR del sistema. Posteriormente, se detalla la adaptación de esta arquitectura a la plataforma RFSoC, incorporando el RF Data Converter y las señales asociadas a los conversores ADC y DAC integrados.
+
+Finalmente, se describe el \textit{software} desarrollado en Vitis para inicializar los periféricos, gestionar las transferencias DMA y ejecutar el procesado de las trazas adquiridas. Esta separación permite analizar cada parte del sistema de forma independiente y presentar el trabajo como una evolución desde una plataforma de validación inicial hasta la integración sobre la ZCU670.
+
+\section{Desarrollo del sistema de experimentación}
+\label{sec:desarr-del-sist}
+
+Blah, blah, blah\ldots
+
+
+\section{Planteamiento matemático}
+\label{sec:libr-desarr}
+
+También resulta útil poder introducir ecuaciones que se encuentran tanto en línea con el texto (como por ejemplo $\sigma=0.75$), como en un párrafo aparte (como en la ecuación \ref{eq:eq1}). Al igual que ocurre con las figuras, también se pueden referenciar las ecuaciones.
+
+\begin{equation}
+  \label{eq:eq1}
+  p[q_t=\sigma_t|q_{t-1}=\sigma_{t-1}]
+\end{equation}
+
+\section{Conclusiones}
+\label{sec:conclusiones-desarrollo}
+
+Blah, blah, blah\ldots
+
+
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:
